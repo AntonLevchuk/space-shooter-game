@@ -1,0 +1,9 @@
+{
+    "SpawnInterval": 1700,
+
+    "MinScale": 0.4,
+    "MaxScale": 0.9,
+    
+    "MinSpeed": 0.5, 
+    "MaxSpeed": 1.2
+}

@@ -1,0 +1,32 @@
+{
+    "missions": [
+        {
+            "name": "Mission 1",
+            "description": "Survive for 30 seconds as deadly comets rain down. Destroy them or dodge — do whatever it takes to reach the next level.",
+            "objectives": [
+                "Survive for {duration} seconds!",
+                "Avoid taking damage!",
+                "Destroy all comets!"
+            ],
+            "missionDuration": 30
+        },
+        {
+            "name": "Mission 2",
+            "description": "Defeat all asteroids and avoid getting hit. Only the strongest will survive.",
+            "objectives": [
+                "Survive for {duration} seconds!",
+                "Avoid taking damage!",
+                "Destroy all comets and enemies!"
+            ],
+            "missionDuration": 30
+        },
+        {
+            "name": "Mission 3",
+            "description": "Face the final boss and prove your skill in battle. Only one will emerge victorious.",
+            "objectives": [
+                "Defeat the boss!",
+                "Avoid taking damage!"
+            ]
+        }
+    ]
+}
