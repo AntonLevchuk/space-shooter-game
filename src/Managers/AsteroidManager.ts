@@ -1,12 +1,12 @@
-import { Container, Texture, Ticker } from "pixi.js";
-import Asteroid from "../Entities/Asteroid";
-import AsteroidsCfg from '../Configs/AsteroidsCfg.json';
-import Utils from "../Utils/Utils";
-import GameStateManager from "./GameStateManager";
+import { Container, Texture, Ticker } from 'pixi.js';
+import Asteroid from '../Entities/Asteroid';
+import MissionCfg from '../Configs/MissionsCfg.json';
+import Utils from '../Utils/Utils';
+import GameStateManager from './GameStateManager';
 
 export default class AsteroidManager extends Container {
     private textures: Texture[] = [];
-    private spawnInterval: number = AsteroidsCfg.SpawnInterval;
+    private spawnInterval: number = MissionCfg.missions[Utils.missionIndex].enemiesConfigs.SpawnInterval;
     private lastSpawnTime = 0;
     public asteroids: Asteroid[] = [];
 

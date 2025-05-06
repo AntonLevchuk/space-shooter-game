@@ -1,4 +1,4 @@
-import { Assets } from "pixi.js";
+import { Assets } from 'pixi.js';
 
 export default class AssetsLoader {
     
@@ -7,7 +7,7 @@ export default class AssetsLoader {
 
         for (const path of paths) {
             // Extract the file name from the path and use it as the key in the bundle object
-            const parts: string[] = path.split("/");
+            const parts: string[] = path.split('/');
             const fileName: string = parts[parts.length - 1];
             const key: string = fileName.split('.')[0];
 

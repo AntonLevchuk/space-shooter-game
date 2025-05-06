@@ -1,4 +1,4 @@
-import { Application, Renderer } from "pixi.js";
+import { Application, Renderer } from 'pixi.js';
 
 export default class ScreenUtil {
     private static app: Application<Renderer>;

@@ -1,6 +1,6 @@
-import { Sprite, Texture, Ticker } from "pixi.js";
+import { Sprite, Texture, Ticker } from 'pixi.js';
 import HeroCfg from '../Configs/HeroCfg.json';
-import GameStateManager from "../Managers/GameStateManager";
+import GameStateManager from '../Managers/GameStateManager';
 
 export default class Bullet extends Sprite {
     private bulletSpeed: number = HeroCfg.BulletSpeed;
@@ -22,10 +22,6 @@ export default class Bullet extends Sprite {
     private moveUp(): void {
         this.y -= this.bulletSpeed;
     }
-
-    // public isOutOfScreen(): boolean {
-    //     return this.y < -this.height;
-    // }
 
     public destroy(): void {
         Ticker.shared.remove(this.update, this);

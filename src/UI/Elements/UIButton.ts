@@ -1,4 +1,4 @@
-import { Container, FederatedPointerEvent, Graphics, Text, TextStyle } from "pixi.js";
+import { Container, FederatedPointerEvent, Graphics, Text, TextStyle } from 'pixi.js';
 
 interface UIButtonConfig {
     width?: number;
@@ -33,8 +33,6 @@ export default class UIButton extends Container {
     }
 
     protected drawButton(): void {
-        //move values to config file
-
         const width = this.config.width ?? 150;
         const height = this.config.height ?? 50;
 

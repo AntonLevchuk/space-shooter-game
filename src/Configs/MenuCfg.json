@@ -1,0 +1,44 @@
+{
+    "mainMenu": {
+        "playButtonName": "Play",
+        "settingsButtonName": "Settings",
+        "muteButtonName": "Mute",
+
+        "playButtonParams": {
+            "offSetX": 100,
+            "offSetY": 100,
+            "width": 200,
+            "height": 50,
+            "fontSize": 26
+        },
+
+        "muteButtonParams": {
+            "offSetX": 60,
+            "offSetY": 10,
+            "width": 50,
+            "height": 50,
+            "fontSize": 20
+        }
+    },
+
+    "briefingMenu": {
+        "title": {
+            "titleFontSize": 32,
+            "titleFontColor": "0xffffff"
+        },
+        "description": {
+            "descriptionFontSize": 20,
+            "descriptionFontColor": "0xcccccc"
+        },
+        "objectives": {
+            "objectivesFontSize": 18,
+            "objectivesFontColor": "0xaaaaaa"
+        },
+
+        "playButtonName": "Play",
+        "mainMenuButtonName": "Main Menu",
+        "buttonWidth": 180,
+        "buttonHeight": 60,
+        "buttonFontSize": 24
+    }
+}

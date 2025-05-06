@@ -1,13 +1,13 @@
 import { Application, Renderer } from 'pixi.js';
-import ScreenUtil from './ScreenUtil';
 
 export default class ResizeManager {
     private static instance: ResizeManager;
     private app: Application<Renderer>;
-    private resizeCallbacks: (() => void)[] = [];
+    private resizeCallbacks: Set<() => void> = new Set();
 
     private constructor(app: Application<Renderer>) {
         this.app = app;
+
         window.addEventListener('resize', this.resize);
         this.resize();
     }
@@ -20,13 +20,17 @@ export default class ResizeManager {
 
     public static getInstance(): ResizeManager {
         if (!ResizeManager.instance) {
-            throw new Error("ResizeManager not initialized. Call ResizeManager.init(app) first.");
+            throw new Error('ResizeManager is not initialized. Call initialize(app) first.');
         }
         return ResizeManager.instance;
     }
 
     public onResize(callback: () => void): void {
-        this.resizeCallbacks.push(callback);
+        this.resizeCallbacks.add(callback);
+    }
+
+    public offResize(callback: () => void): void {
+        this.resizeCallbacks.delete(callback);
     }
 
     private resize = (): void => {
@@ -57,6 +61,6 @@ export default class ResizeManager {
 
     public destroy(): void {
         window.removeEventListener('resize', this.resize);
-        this.resizeCallbacks = [];
+        this.resizeCallbacks.clear();
     }
 }

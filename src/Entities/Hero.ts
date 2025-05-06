@@ -1,10 +1,10 @@
-import { Container, Sprite, Texture, Ticker } from "pixi.js";
+import { Container, Sprite, Texture, Ticker } from 'pixi.js';
 import HeroCfg from '../Configs/HeroCfg.json';
 import ScreenUtil from '../Utils/ScreenUtil';
-import Bullet from "./Bullet";
-import Utils from "../Utils/Utils";
-import Asteroid from "./Asteroid";
-import GameStateManager from "../Managers/GameStateManager";
+import Bullet from './Bullet';
+import Utils from '../Utils/Utils';
+import Asteroid from './Asteroid';
+import GameStateManager from '../Managers/GameStateManager';
 
 export default class Hero extends Container {
     public sprite: Sprite;
@@ -25,11 +25,11 @@ export default class Hero extends Container {
         this.sprite.scale.set(HeroCfg.Scale);
 
         this.keys = {
-            "KeyA": false, // Left
-            "KeyD": false, // Right
-            "KeyW": false, // Up
-            "KeyS": false, // Down
-            "Space": false, // Shoot
+            'KeyA': false, // Left
+            'KeyD': false, // Right
+            'KeyW': false, // Up
+            'KeyS': false, // Down
+            'Space': false, // Shoot
         };
 
         Utils.repositionAccordingToResize(this.sprite);
@@ -53,39 +53,39 @@ export default class Hero extends Container {
     private keysDown(event: KeyboardEvent): void {
         if (event.code in this.keys) {
             this.keys[event.code] = true;
-            if (event.code === "Space") this.startShooting();
+            if (event.code === 'Space') this.startShooting();
         }
     }
 
     private keysUp(event: KeyboardEvent): void {
         if (event.code in this.keys) {
             this.keys[event.code] = false;
-            if (event.code === "Space") this.stopShooting();
+            if (event.code === 'Space') this.stopShooting();
         }
     }
 
     private moveHero(): void {
-        if (this.keys["KeyA"] && this.sprite.x >= this.sprite.width / 2) {
+        if (this.keys['KeyA'] && this.sprite.x >= this.sprite.width / 2) {
             this.moveLeft();
         }
     
-        if (this.keys["KeyD"] && this.sprite.x <= ScreenUtil.width - this.sprite.width / 2) {
+        if (this.keys['KeyD'] && this.sprite.x <= ScreenUtil.width - this.sprite.width / 2) {
             this.moveRight();
         }
 
-        if (this.keys["KeyW"] && this.sprite.y >= this.sprite.height / 2) {
+        if (this.keys['KeyW'] && this.sprite.y >= this.sprite.height / 2) {
             this.moveUp();
         }
 
-        if (this.keys["KeyS"] && this.sprite.y <= ScreenUtil.height - this.sprite.height / 2) {
+        if (this.keys['KeyS'] && this.sprite.y <= ScreenUtil.height - this.sprite.height / 2) {
             this.moveDown();
         }
     }
 
     private rotateHero(): void {
-        if (this.keys["KeyA"]) {
+        if (this.keys['KeyA']) {
             this.sprite.rotation = -HeroCfg.RotationAngle;
-        } else if (this.keys["KeyD"]) {
+        } else if (this.keys['KeyD']) {
             this.sprite.rotation = HeroCfg.RotationAngle;
         } else {
             this.sprite.rotation = 0;
@@ -156,11 +156,6 @@ export default class Hero extends Container {
     public stopShooting(): void {
         this.isShooting = false;
     }
-
-    // public updateHeroPosition(): void {
-    //     this.sprite.x = ScreenUtil.width / 2;
-    //     this.sprite.y = ScreenUtil.height - this.sprite.height;
-    // }
 
     public destroy(): void {
         Ticker.shared.remove(() => this.update([]), this);

@@ -1,4 +1,5 @@
 import { Container, Application } from 'pixi.js';
+import GameStateManager, { GameState } from './GameStateManager';
 
 export default class SceneManager {
     private static app: Application;
@@ -11,7 +12,9 @@ export default class SceneManager {
     public static changeScene(newScene: Container): void {
         if (this.currentScene) {
             this.app.stage.removeChild(this.currentScene);
-            this.currentScene.destroy();
+            if (GameStateManager.getInstance().getState() !== GameState.Paused) {
+                this.currentScene.destroy();
+            }
         }
 
         this.currentScene = newScene;

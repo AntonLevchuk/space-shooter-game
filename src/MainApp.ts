@@ -3,7 +3,7 @@ import AssetsLoader from './Utils/AssetsLoader';
 import ScreenUtil from './Utils/ScreenUtil';
 import SceneManager from './Managers/SceneManager';
 import GameStateManager, { GameState } from './Managers/GameStateManager';
-import ResizeManager from './Utils/ResizeManager';
+import ResizeManager from './Managers/ResizeManager';
 
 declare global {
   interface GlobalThis {

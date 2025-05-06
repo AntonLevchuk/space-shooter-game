@@ -5,8 +5,9 @@
     "Anchor": 0.5,
     "Scale": 0.4,
     "RotationAngle": 0.3,
-
     "BulletSpeed": 13,
     "BulletTextureName": "Bullet",
-    "BulletScale": 0.5
+    "BulletScale": 0.5,
+
+    "health": 100
 }
