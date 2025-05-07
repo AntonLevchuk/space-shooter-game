@@ -17,7 +17,6 @@ export default class EnemyManager extends Container {
         this.missionIndex = missionIndex;
         this.enemyFactory = new EnemyFactory();
     
-        const missionConfig = GameStorage.missionConfig;
         const enemyTypes = GameCfg.missions[this.missionIndex].enemies;
         for (const type of enemyTypes) {
             this.lastSpawnTimes[type] = 0;
@@ -54,8 +53,10 @@ export default class EnemyManager extends Container {
         
         const enemy: BaseEnemyClass = this.enemyFactory.createEnemy(enemyType, enemyTexture);
         
-        this.addChild(enemy);
-        this.enemies.push(enemy);
+        if (!this.children.includes(enemy)) {
+            this.addChild(enemy);
+            this.enemies.push(enemy);
+        }
     }
 
     private updateEnemies(): void {

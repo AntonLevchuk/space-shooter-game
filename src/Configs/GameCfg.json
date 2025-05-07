@@ -32,7 +32,7 @@
                 "• Avoid taking damage!",
                 "• Destroy all comets and enemies!"
             ],
-            "missionDuration": 30,
+            "missionDuration": 3,
             "enemiesConfigs": {
                 "Asteroid": {
                     "SpawnInterval": 1200,
@@ -61,12 +61,20 @@
             "name": "Mission 3",
             "description": "Face the final boss and prove your skill in battle. Only one will emerge victorious.",
             "objectives": [
-                "• Defeat the boss!",
-                "• Avoid taking damage!"
+                "• Defeat the boss or stay alive for {duration} seconds!",
+                "• Avoid taking damage!",
+                "• Destroy all comets and enemies!"
             ],
+            "enemies": ["Boss", "Asteroid", "Kamikaze"],
+            "enemiesTexturesKeys": {
+                "Asteroid": ["Asteroid_grey", "Asteroid_brown", "Asteroid_grey_&_blue"],
+                "Kamikaze": ["Kamikaze_1", "Kamikaze_2", "Kamikaze_3"],
+                "Boss": ["Boss"]
+            },
+            "missionDuration": 100,
             "enemiesConfigs": {
                 "Asteroid": {
-                    "SpawnInterval": 1200,
+                    "SpawnInterval": 1500,
                     "MinScale": 0.4,
                     "MaxScale": 0.9,
                     "MinSpeed": 0.5, 
@@ -75,14 +83,24 @@
                 },
                 "Kamikaze": {
                     "SpawnInterval": 1400,
-                    "MinScale": 0.4,
-                    "MaxScale": 0.9,
-                    "MinSpeed": 0.5, 
-                    "MaxSpeed": 1.3,
-                    "damage": 30
+                    "MinScale": 1.4,
+                    "MaxScale": 2.8,
+                    "MinSpeed": 0.8, 
+                    "MaxSpeed": 1.7,
+                    "damage": 50
+                },
+                "Boss": {
+                    "SpawnInterval": 10,
+                    "HorizontalSpeed": 2.5,
+                    "ShootingInterval": 600,
+                    "ChangeFireModeInterval": 2000,
+                    "Anchor": 0.5,
+                    "Scale": 2.5,
+                    "BulletScale": 0.5,
+                    "Health": 100,
+                    "damage": 15
                 }
-            },
-            "enemies": ["Asteroid", "Kamikaze", "Boss"]
+            }
         }
     ],
     "gameOver": {
@@ -102,7 +120,9 @@
         "Kamikaze_1": "assets/Enemies/Kamikaze/Kamikaze_1.png",
         "Kamikaze_2": "assets/Enemies/Kamikaze/Kamikaze_2.png",
         "Kamikaze_3": "assets/Enemies/Kamikaze/Kamikaze_3.png",
-        "Bullet": "assets/Bullet/Bullet.png",
+        "Boss": "assets/Enemies/Boss/Boss.png",
+        "Hero_bullet": "assets/Bullet/Hero_bullet.png",
+        "Boss_bullet": "assets/Bullet/Boss_bullet.png",
         "Star": "assets/Star/Star.png",
         "Empty_star": "assets/Star/Empty_star.png"
     }

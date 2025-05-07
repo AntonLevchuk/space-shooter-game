@@ -2,6 +2,7 @@ import Hero from "../Entities/Hero";
 import GameCfg from '../Configs/GameCfg.json';
 import AsteroidInterface from "../Interfaces/EnemyInterfaces";
 import KamikazeInterface from "../Interfaces/EnemyInterfaces";
+import BossInterface from "../Interfaces/EnemyInterfaces";
 export default class GameStorage {
     public static missionIndex: number = 0;
     public static starsErned: number = 3;
@@ -22,7 +23,7 @@ export default class GameStorage {
         return GameCfg.missions[GameStorage.missionIndex];
     }
 
-    public static getEnemyConfig(enemyType: string): AsteroidInterface | KamikazeInterface {
+    public static getEnemyConfig(enemyType: string): AsteroidInterface | KamikazeInterface | BossInterface {
         const missionConfig = GameStorage.missionConfig;
         return missionConfig.enemiesConfigs[
             enemyType as keyof typeof missionConfig.enemiesConfigs

@@ -25,7 +25,7 @@ export default class MissionBriefingMenu extends Container {
         const mission = MissionCfg.missions[missionIndex];
         if (!mission) throw new Error(`Mission with index ${missionIndex} not found`);
 
-        const titleStyle = new TextStyle({ fontSize: MenuCfg.briefingMenu.title.titleFontSize, fill: MenuCfg.briefingMenu.title.titleFontSize, fontWeight: 'bold' });
+        const titleStyle = new TextStyle({ fontSize: MenuCfg.briefingMenu.title.titleFontSize, fill: MenuCfg.briefingMenu.title.titleFontColor, fontWeight: 'bold' });
         const descStyle = new TextStyle({ fontSize: MenuCfg.briefingMenu.description.descriptionFontSize, fill: MenuCfg.briefingMenu.description.descriptionFontColor, wordWrap: true });
         const objStyle = new TextStyle({ fontSize: MenuCfg.briefingMenu.objectives.objectivesFontSize, fill: MenuCfg.briefingMenu.objectives.objectivesFontColor });
 

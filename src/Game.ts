@@ -8,6 +8,7 @@ import GameStateManager, { GameState } from './Managers/GameStateManager';
 import ScreenUtil from './Utils/ScreenUtil';
 import GameStorage from './Utils/GameStorage';
 import EnemyManager from './Managers/EnemyManager';
+import HeroCfg from './Configs/HeroCfg.json';
 
 export default class Game extends Container {
     private pixiApp: Application<Renderer>;
@@ -29,7 +30,7 @@ export default class Game extends Container {
     }
 
     private initEntities() {
-        this.hero = new Hero('Hero');
+        this.hero = Hero.getInstance(HeroCfg.HerotextureName);
         this.addChild(this.hero);
 
         GameStorage.hero = this.hero;

@@ -5,6 +5,7 @@ import ScreenUtil from '../Utils/ScreenUtil';
 import ResizeManager from '../Managers/ResizeManager';
 import GameStorage from '../Utils/GameStorage';
 import LevelEndMenuCfg from '../Configs/LevelEndMenuCfg.json';
+import GameCfg from '../Configs/GameCfg.json';
 
 export default class LevelEndMenu extends Container {
     private starsContainer: Container;
@@ -58,12 +59,14 @@ export default class LevelEndMenu extends Container {
         this.addChild(this.retryBtn);
 
         this.nextRoundBtn = new UIButton({
-            label: LevelEndMenuCfg.LevelComplete.NextLevelButton.Text,
+            label: GameCfg.missions[GameStorage.missionIndex + 1] ? LevelEndMenuCfg.LevelComplete.NextLevelButton.Text :  LevelEndMenuCfg.LevelComplete.BackToMenuButton.Text,
             width: LevelEndMenuCfg.LevelComplete.NextLevelButton.Width,
             height: LevelEndMenuCfg.LevelComplete.NextLevelButton.Height,
             onClick: () => {
                 GameStorage.missionIndex++;
-                GameStateManager.getInstance().changeState(GameState.MissionBriefing)
+                GameCfg.missions[GameStorage.missionIndex] 
+                    ? GameStateManager.getInstance().changeState(GameState.MissionBriefing)
+                    : GameStateManager.getInstance().changeState(GameState.MainMenu);
             },
         });
         isComplete && this.addChild(this.nextRoundBtn);

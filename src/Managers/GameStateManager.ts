@@ -50,6 +50,7 @@ export default class GameStateManager {
 
         switch (this.state) {
             case GameState.MainMenu:
+                GameStorage.missionIndex = 0;
                 this.currentScene = new MainMenu(
                     () => console.log('Settings pressed'),
                     () => console.log('Toggle Mute pressed')

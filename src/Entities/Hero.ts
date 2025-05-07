@@ -8,6 +8,8 @@ import GameStorage from '../Utils/GameStorage';
 import BaseEnemyClass from './Enemies/BaseEnemyClass';
 
 export default class Hero extends Container {
+    private static instance: Hero | null = null;
+
     public sprite: Sprite;
     private horizontalSpeed: number = HeroCfg.HorizontalSpeed;
     private verticalSpeed: number = HeroCfg.VerticalSpeed;
@@ -16,9 +18,10 @@ export default class Hero extends Container {
     private shootingInterval: number = HeroCfg.ShootingInterval;
     private lastShotTime: number = 0;
     private bullets: Bullet[] = [];
-    private heroHealth: number;
+    public healthPoints: number;
+    private heroDamage: number = HeroCfg.Damage;
 
-    constructor(texture: string) {
+    private constructor(texture: string) {
         super();
         this.sprite = Sprite.from(texture);
         this.addChild(this.sprite);
@@ -34,11 +37,21 @@ export default class Hero extends Container {
             'Space': false, // Shoot
         };
 
-        this.heroHealth = HeroCfg.Health;
+        this.healthPoints = HeroCfg.Health;
 
         Utils.repositionAccordingToResize(this.sprite);
-
         this.setupInput();
+    }
+
+    public static getInstance(texture?: string): Hero {
+        if (!Hero.instance) {
+            Hero.instance = new Hero(texture);
+        }
+        return Hero.instance;
+    }
+
+    public static resetInstance(): void {
+        Hero.instance = null;
     }
 
     public update(enemies: BaseEnemyClass[]): void {
@@ -102,7 +115,6 @@ export default class Hero extends Container {
         if (this.isShooting && now - this.lastShotTime >= this.shootingInterval) {
             this.shoot();
             this.lastShotTime = now;
-
         }
     }
 
@@ -116,7 +128,7 @@ export default class Hero extends Container {
         for (let i: number = this.bullets.length - 1; i >= 0; i--) {
             const bullet: Bullet = this.bullets[i];
             bullet.update();
-    
+
             if (Utils.isOutOfScreen(bullet, false)) {
                 bullet.destroy();
                 this.bullets.splice(i, 1);
@@ -129,8 +141,12 @@ export default class Hero extends Container {
                     bullet.destroy();
                     this.bullets.splice(i, 1);
 
-                    enemy.destroy();
-                    enemies.splice(j, 1);
+                    if (enemy.enemyType !== GameStorage.bossEnemyTypeName) {
+                        enemy.destroy();
+                        enemies.splice(j, 1);
+                    } else {
+                        enemy.healthPoints -= this.heroDamage;
+                    }
                     break;
                 }
             }
@@ -145,20 +161,21 @@ export default class Hero extends Container {
                     GameStorage.isTakenDamage = true;
                     GameStorage.starsErned--;
                 }
+
                 const enemyConfig = GameStorage.getEnemyConfig(enemy.enemyType);
-                this.heroHealth -= enemyConfig.damage;
-                if (this.heroHealth <= 0) {
+                this.healthPoints -= enemyConfig.damage;
+
+                if (this.healthPoints <= 0) {
                     GameStorage.starsErned = 0;
                     GameStateManager.getInstance().changeState(GameState.GameOver);
                 }
+
                 enemy.destroy();
                 enemies.splice(i, 1);
                 break;
             }
-
         }
     }
-    
 
     private moveLeft(): void {
         this.sprite.x -= this.horizontalSpeed;
@@ -179,7 +196,7 @@ export default class Hero extends Container {
     public startShooting(): void {
         this.isShooting = true;
     }
-    
+
     public stopShooting(): void {
         this.isShooting = false;
     }
@@ -188,6 +205,7 @@ export default class Hero extends Container {
         Ticker.shared.remove(() => this.update([]), this);
         window.removeEventListener('keydown', this.keysDown.bind(this));
         window.removeEventListener('keyup', this.keysUp.bind(this));
+        Hero.resetInstance();
         super.destroy();
     }
 }

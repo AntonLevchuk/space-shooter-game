@@ -1,12 +1,14 @@
 {
     "HorizontalSpeed": 4,
     "VerticalSpeed": 3,
-    "ShootingInterval": 300,
+    "ShootingInterval": 500,
     "Anchor": 0.5,
     "Scale": 0.4,
     "RotationAngle": 0.3,
     "BulletSpeed": 13,
-    "BulletTextureName": "Bullet",
+    "BulletTextureName": "Hero_bullet",
     "BulletScale": 0.5,
-    "Health": 100
+    "Health": 100,
+    "Damage": 20,
+    "HerotextureName": "Hero"
 }

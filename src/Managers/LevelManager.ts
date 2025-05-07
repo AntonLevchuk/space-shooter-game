@@ -22,7 +22,7 @@ export default class LevelManager {
 
         const mission = MissionCfg.missions[this.missionIndex];
         if (!mission) {
-            throw new Error(`Mission with index ${this.missionIndex} not found`);
+            return;
         }
 
         this.missionDuration = mission.missionDuration || 30; // 30 seconds by default
