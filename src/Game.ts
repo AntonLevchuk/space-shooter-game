@@ -9,12 +9,14 @@ import ScreenUtil from './Utils/ScreenUtil';
 import GameStorage from './Utils/GameStorage';
 import EnemyManager from './Managers/EnemyManager';
 import HeroCfg from './Configs/HeroCfg.json';
+import BoosterManager from './Managers/BoosterManager';
 
 export default class Game extends Container {
     private pixiApp: Application<Renderer>;
     private hero: Hero;
     private enemyManager: EnemyManager;
     private levelManager: LevelManager;
+    private boosterManager: BoosterManager;
     private pauseButton: UIButton;
 
     private boundUpdate: (ticker: Ticker) => void;
@@ -22,6 +24,7 @@ export default class Game extends Container {
     private boundEnemiesUpdate: () => void;
     private resizeCallback: () => void;
     private boundLevelUpdate: (deltaMS: number) => void;
+    private boundBoostersUpdate: () => void;
 
     constructor(app: Application<Renderer>) {
         super();
@@ -41,6 +44,9 @@ export default class Game extends Container {
         this.levelManager = new LevelManager(GameStorage.missionIndex);
         this.addChild(this.levelManager.getTimerText());
 
+        this.boosterManager = new BoosterManager();
+        this.addChild(this.boosterManager);
+
         this.createPauseButton();
 
         this.resizeCallback = () => {
@@ -50,6 +56,7 @@ export default class Game extends Container {
         ResizeManager.getInstance().onResize(this.resizeCallback);
 
         this.boundHeroUpdate = this.hero.update.bind(this.hero, this.enemyManager.enemies);
+        this.boundBoostersUpdate = this.boosterManager.update.bind(this.boosterManager);
         this.boundEnemiesUpdate = this.enemyManager.update.bind(this.enemyManager);
         this.boundUpdate = this.update.bind(this);
         this.boundLevelUpdate = this.levelManager.update;
@@ -78,6 +85,7 @@ export default class Game extends Container {
     private update(ticker: Ticker): void {
         if (GameStateManager.getInstance().getState() === GameState.Playing) {
             this.boundEnemiesUpdate();
+            this.boundBoostersUpdate();
             this.boundHeroUpdate();
             this.boundLevelUpdate(ticker.elapsedMS);
         }
@@ -87,6 +95,7 @@ export default class Game extends Container {
         this.pixiApp.ticker.remove(this.boundUpdate);
         this.pixiApp.ticker.remove(this.boundEnemiesUpdate);
         this.pixiApp.ticker.remove(this.boundHeroUpdate);
+        this.pixiApp.ticker.remove(this.boundBoostersUpdate);
         ResizeManager.getInstance().offResize(this.resizeCallback);
         
         GameStorage.hero = null

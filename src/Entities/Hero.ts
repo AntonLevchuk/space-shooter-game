@@ -1,4 +1,4 @@
-import { Container, Sprite, Texture, Ticker } from 'pixi.js';
+import { Container, Graphics, Sprite, Texture, Ticker } from 'pixi.js';
 import HeroCfg from '../Configs/HeroCfg.json';
 import ScreenUtil from '../Utils/ScreenUtil';
 import Bullet from './Bullet';
@@ -6,6 +6,7 @@ import Utils from '../Utils/Utils';
 import GameStateManager, { GameState } from '../Managers/GameStateManager';
 import GameStorage from '../Utils/GameStorage';
 import BaseEnemyClass from './Enemies/BaseEnemyClass';
+import BoostersCfg from '../Configs/BoostersCfg.json';
 
 export default class Hero extends Container {
     private static instance: Hero | null = null;
@@ -20,6 +21,9 @@ export default class Hero extends Container {
     private bullets: Bullet[] = [];
     public healthPoints: number;
     private heroDamage: number = HeroCfg.Damage;
+    public cleanHealthPoints: number;
+    private isBoosterActive: boolean = false;
+    private boosterTimeoutId: number | null = null;
 
     private constructor(texture: string) {
         super();
@@ -61,6 +65,10 @@ export default class Hero extends Container {
         this.updateShooting();
         this.updateBullets(enemies);
         this.checkHeroHealth(enemies);
+
+        if (this.healthPoints <= this.cleanHealthPoints) {
+            this.deactivateBooster();
+        }
     }
 
     private setupInput(): void {
@@ -157,7 +165,7 @@ export default class Hero extends Container {
         for (let i: number = 0; i < enemies.length; i++) {
             const enemy: BaseEnemyClass = enemies[i];
             if (Utils.checkAABBCollision(this.sprite, enemy)) {
-                if (!GameStorage.isTakenDamage) {
+                if (!GameStorage.isTakenDamage && !this.isBoosterActive) {
                     GameStorage.isTakenDamage = true;
                     GameStorage.starsErned--;
                 }
@@ -199,6 +207,36 @@ export default class Hero extends Container {
 
     public stopShooting(): void {
         this.isShooting = false;
+    }
+
+    public addArmor(armorAmount: number): void {
+        this.cleanHealthPoints = this.healthPoints;
+        this.healthPoints += armorAmount;
+
+        this.activateBooster();
+    }
+
+    private activateBooster(): void {
+        if (this.isBoosterActive) return;
+
+        this.isBoosterActive = true;
+
+        this.boosterTimeoutId = window.setTimeout(() => {
+            this.deactivateBooster();
+        }, BoostersCfg.Boosters[GameStorage.shieldBoosterType as keyof typeof BoostersCfg.Boosters].Duration * 1000);
+    }
+
+    public deactivateBooster(): void {
+        if (!this.isBoosterActive) return;
+
+        this.isBoosterActive = false;
+
+        this.boosterTimeoutId && clearTimeout(this.boosterTimeoutId);
+        this.boosterTimeoutId = null;
+    
+        if (this.healthPoints > this.cleanHealthPoints) {
+            this.healthPoints = this.cleanHealthPoints;
+        }
     }
 
     public destroy(): void {

@@ -1,0 +1,11 @@
+{
+    "Boosters": {
+        "ShieldBooster": {
+            "Type": "ShieldBooster",
+            "Duration": 15,
+            "ArmorAmount": 60,
+            "SpriteName": "Buster_shield",
+            "MaxAppearenceDelay": 0.5
+        }
+    }
+}

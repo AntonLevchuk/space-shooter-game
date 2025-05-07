@@ -12,6 +12,8 @@ export default class GameStorage {
     public static kamikazeEnemyTypeName: string = "Kamikaze";
     public static bossEnemyTypeName: string = "Boss";
 
+    public static shieldBoosterType: string = "ShieldBooster";
+
     public static hero: Hero | null = null;
 
     public static resetGameValues(): void {
