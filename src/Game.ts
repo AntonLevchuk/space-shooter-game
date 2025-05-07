@@ -10,6 +10,8 @@ import GameStorage from './Utils/GameStorage';
 import EnemyManager from './Managers/EnemyManager';
 import HeroCfg from './Configs/HeroCfg.json';
 import BoosterManager from './Managers/BoosterManager';
+import BoosterItem from './Entities/BoosterItem';
+import BoostersCfg from './Configs/BoostersCfg.json';
 
 export default class Game extends Container {
     private pixiApp: Application<Renderer>;
@@ -18,6 +20,7 @@ export default class Game extends Container {
     private levelManager: LevelManager;
     private boosterManager: BoosterManager;
     private pauseButton: UIButton;
+    private boosterButton: UIButton;
 
     private boundUpdate: (ticker: Ticker) => void;
     private boundHeroUpdate: () => void;
@@ -48,6 +51,7 @@ export default class Game extends Container {
         this.addChild(this.boosterManager);
 
         this.createPauseButton();
+        this.createBoosterButton();
 
         this.resizeCallback = () => {
             Utils.repositionAccordingToResize(this.hero.sprite);
@@ -78,8 +82,31 @@ export default class Game extends Container {
         this.addChild(this.pauseButton);
     }
 
+    private createBoosterButton(): void {
+        this.pauseButton = new UIButton({
+            label: 'Activate',
+            width: 100,
+            height: 50,
+            fontSize: 24,
+            onClick: this.toggleBoosterButton.bind(this),
+        });
+        this.pauseButton.position.set(ScreenUtil.width - this.pauseButton.width - 20, (ScreenUtil.height - this.pauseButton.height) / 2);
+        this.addChild(this.pauseButton);
+    }
+
     private togglePause(): void {
         GameStateManager.getInstance().changeState(GameState.Paused);
+    }
+
+    private toggleBoosterButton(): void {
+        if (BoosterItem.collected && !Hero.isBoosterActive) {
+            const hero = Hero.getInstance();
+            switch (BoosterItem.busterType) {
+                case GameStorage.shieldBoosterType:
+                    hero.addArmor(BoostersCfg.Boosters[GameStorage.shieldBoosterType as keyof typeof BoostersCfg.Boosters].ArmorAmount);
+                    break;
+            }
+        }
     }
 
     private update(ticker: Ticker): void {

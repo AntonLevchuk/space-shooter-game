@@ -1,4 +1,4 @@
-import { Container, Graphics, Sprite, Texture, Ticker } from 'pixi.js';
+import { Container, Graphics, Sprite, Text, TextStyle, Texture, Ticker } from 'pixi.js';
 import HeroCfg from '../Configs/HeroCfg.json';
 import ScreenUtil from '../Utils/ScreenUtil';
 import Bullet from './Bullet';
@@ -22,8 +22,10 @@ export default class Hero extends Container {
     public healthPoints: number;
     private heroDamage: number = HeroCfg.Damage;
     public cleanHealthPoints: number;
-    private isBoosterActive: boolean = false;
+    public static isBoosterActive: boolean = false;
     private boosterTimeoutId: number | null = null;
+    private healthBar: Graphics;
+    private maxHealth: number = HeroCfg.Health;
 
     private constructor(texture: string) {
         super();
@@ -45,6 +47,9 @@ export default class Hero extends Container {
 
         Utils.repositionAccordingToResize(this.sprite);
         this.setupInput();
+
+        this.createHealthBar();
+        this.updateHealthBar();
     }
 
     public static getInstance(texture?: string): Hero {
@@ -69,6 +74,8 @@ export default class Hero extends Container {
         if (this.healthPoints <= this.cleanHealthPoints) {
             this.deactivateBooster();
         }
+
+        this.updateHealthBar();
     }
 
     private setupInput(): void {
@@ -165,7 +172,7 @@ export default class Hero extends Container {
         for (let i: number = 0; i < enemies.length; i++) {
             const enemy: BaseEnemyClass = enemies[i];
             if (Utils.checkAABBCollision(this.sprite, enemy)) {
-                if (!GameStorage.isTakenDamage && !this.isBoosterActive) {
+                if (!GameStorage.isTakenDamage && !Hero.isBoosterActive) {
                     GameStorage.isTakenDamage = true;
                     GameStorage.starsErned--;
                 }
@@ -209,6 +216,33 @@ export default class Hero extends Container {
         this.isShooting = false;
     }
 
+    private createHealthBar(): void {
+        const barHeight = 6;
+        const offsetY = -this.sprite.height / 2 - 10;
+    
+        const titleStyle = new TextStyle({ fontSize: HeroCfg.HealthTextFontSize, fill: HeroCfg.HealthTextColor, fontWeight: 'bold' });
+        const healthText = new Text(HeroCfg.HealthText, titleStyle);
+        healthText.anchor.set(0.5);
+        this.addChild(healthText);
+    
+        this.healthBar = new Graphics();
+        this.healthBar.beginFill(HeroCfg.HealthBarColor);
+        this.healthBar.drawRect(-HeroCfg.HealthBarWidth / 2, offsetY, HeroCfg.HealthBarWidth, barHeight);
+        this.healthBar.endFill();
+        this.addChild(this.healthBar);
+
+        healthText.position.set(healthText.width / 2, HeroCfg.HealthTextOffsetY);
+        this.healthBar.position.set(healthText.width + HeroCfg.HealthBarOffsetX, HeroCfg.HealthBarOffsetY);
+    }
+
+    private updateHealthBar(): void {
+        const healthRatio = Math.max(this.healthPoints / this.maxHealth, 0);
+    
+        this.healthBar.width = HeroCfg.HealthBarWidth * healthRatio;
+    }
+    
+    
+
     public addArmor(armorAmount: number): void {
         this.cleanHealthPoints = this.healthPoints;
         this.healthPoints += armorAmount;
@@ -217,9 +251,9 @@ export default class Hero extends Container {
     }
 
     private activateBooster(): void {
-        if (this.isBoosterActive) return;
+        if (Hero.isBoosterActive) return;
 
-        this.isBoosterActive = true;
+        Hero.isBoosterActive = true;
 
         this.boosterTimeoutId = window.setTimeout(() => {
             this.deactivateBooster();
@@ -227,9 +261,9 @@ export default class Hero extends Container {
     }
 
     public deactivateBooster(): void {
-        if (!this.isBoosterActive) return;
+        if (!Hero.isBoosterActive) return;
 
-        this.isBoosterActive = false;
+        Hero.isBoosterActive = false;
 
         this.boosterTimeoutId && clearTimeout(this.boosterTimeoutId);
         this.boosterTimeoutId = null;

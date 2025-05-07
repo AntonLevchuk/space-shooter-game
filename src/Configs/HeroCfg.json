@@ -10,5 +10,15 @@
     "BulletScale": 0.5,
     "Health": 100,
     "Damage": 20,
-    "HerotextureName": "Hero"
+    "HerotextureName": "Hero",
+
+    "HealthTextFontSize": 26,
+    "HealthTextColor": "0xffffff",
+    "HealthText": "Health: ",
+    "HealthTextOffsetY": 20,
+
+    "HealthBarColor": "0xff0000",
+    "HealthBarOffsetX": 70,
+    "HealthBarOffsetY": 68,
+    "HealthBarWidth": 60
 }

@@ -1,10 +1,10 @@
-import { Container, DestroyOptions, Sprite, Texture } from "pixi.js";
-import EnemyFactory from "../Factories/EnemyFactory";
-import GameCfg from "../Configs/GameCfg.json";
-import GameStateManager from "./GameStateManager";
-import BaseEnemyClass from "../Entities/Enemies/BaseEnemyClass";
-import Utils from "../Utils/Utils";
-import GameStorage from "../Utils/GameStorage";
+import { Container, DestroyOptions, Sprite, Texture } from 'pixi.js';
+import EnemyFactory from '../Factories/EnemyFactory';
+import GameCfg from '../Configs/GameCfg.json';
+import GameStateManager from './GameStateManager';
+import BaseEnemyClass from '../Entities/Enemies/BaseEnemyClass';
+import Utils from '../Utils/Utils';
+import GameStorage from '../Utils/GameStorage';
 
 export default class EnemyManager extends Container {
     public enemies: BaseEnemyClass[] = [];

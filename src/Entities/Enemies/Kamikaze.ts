@@ -1,8 +1,8 @@
-import { Texture, Ticker } from "pixi.js";
-import BaseEnemyClass from "./BaseEnemyClass";
-import GameStorage from "../../Utils/GameStorage";
-import ScreenUtil from "../../Utils/ScreenUtil";
-import GameStateManager from "../../Managers/GameStateManager";
+import { Texture, Ticker } from 'pixi.js';
+import BaseEnemyClass from './BaseEnemyClass';
+import GameStorage from '../../Utils/GameStorage';
+import ScreenUtil from '../../Utils/ScreenUtil';
+import GameStateManager from '../../Managers/GameStateManager';
 
 export default class Kamikaze extends BaseEnemyClass {
     private speed: number;

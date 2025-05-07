@@ -7,22 +7,22 @@ import ScreenUtil from '../Utils/ScreenUtil';
 
 export default class BoosterItem extends Sprite {
     private speed: number = 2;
-    private collected: boolean = false;
-    private busterType: string;
+    public static collected: boolean = false;
+    public static busterType: string;
 
     constructor(texture: Texture, busterType: string) {
         super(texture);
         this.anchor.set(0.5);
         this.scale.set(3);
 
-        this.busterType = busterType;
+        BoosterItem.busterType = busterType;
 
         this.x = this.width + Math.random() * (ScreenUtil.width - this.width * 1.5);
         this.y = -this.height;
     }
 
     public update(): void {
-        if (this.collected) return;
+        if (BoosterItem.collected) return;
 
         this.y += this.speed;
 
@@ -38,14 +38,7 @@ export default class BoosterItem extends Sprite {
     }
 
     private collect(): void {
-        this.collected = true;
+        BoosterItem.collected = true;
         this.visible = false;
-
-        const hero = Hero.getInstance();
-        switch (this.busterType) {
-            case GameStorage.shieldBoosterType:
-                hero.addArmor(BoostersCfg.Boosters[GameStorage.shieldBoosterType as keyof typeof BoostersCfg.Boosters].ArmorAmount);
-                break;
-        }
     }
 }
