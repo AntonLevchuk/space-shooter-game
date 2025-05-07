@@ -4,7 +4,9 @@ import ScreenUtil from '../Utils/ScreenUtil';
 import Bullet from './Bullet';
 import Utils from '../Utils/Utils';
 import Asteroid from './Asteroid';
-import GameStateManager from '../Managers/GameStateManager';
+import GameStateManager, { GameState } from '../Managers/GameStateManager';
+import MissionsCfg from '../Configs/MissionsCfg.json';
+import GameStorage from '../Utils/GameStorage';
 
 export default class Hero extends Container {
     public sprite: Sprite;
@@ -15,6 +17,7 @@ export default class Hero extends Container {
     private shootingInterval: number = HeroCfg.ShootingInterval;
     private lastShotTime: number = 0;
     private bullets: Bullet[] = [];
+    private heroHealth: number;
 
     constructor(texture: string) {
         super();
@@ -32,6 +35,8 @@ export default class Hero extends Container {
             'Space': false, // Shoot
         };
 
+        this.heroHealth = HeroCfg.Health;
+
         Utils.repositionAccordingToResize(this.sprite);
 
         this.setupInput();
@@ -43,6 +48,7 @@ export default class Hero extends Container {
         this.rotateHero();
         this.updateShooting();
         this.updateBullets(asteroids);
+        this.checkHeroHealth(asteroids);
     }
 
     private setupInput(): void {
@@ -131,6 +137,27 @@ export default class Hero extends Container {
             }
         }
     }
+
+    private checkHeroHealth(asteroids: Asteroid[]): void {
+        for (let i: number = 0; i < asteroids.length; i++) {
+            const asteroid: Asteroid = asteroids[i];
+            if (Utils.checkAABBCollision(this.sprite, asteroid)) {
+                if (!GameStorage.isTakenDamage) {
+                    GameStorage.isTakenDamage = true;
+                    GameStorage.starsErned--;
+                }
+                this.heroHealth -= MissionsCfg.missions[GameStorage.missionIndex].enemiesConfigs.damage;
+                if (this.heroHealth <= 0) {
+                    GameStorage.starsErned = 0;
+                    GameStateManager.getInstance().changeState(GameState.GameOver);
+                }
+                asteroid.destroy();
+                asteroids.splice(i, 1);
+                break;
+            }
+
+        }
+    }
     
 
     private moveLeft(): void {
@@ -159,11 +186,8 @@ export default class Hero extends Container {
 
     public destroy(): void {
         Ticker.shared.remove(() => this.update([]), this);
-        this.sprite = null;
-        this.isShooting = null;
-        this.shootingInterval = null;
-        this.lastShotTime = null;
-        this.bullets = null;
+        window.removeEventListener('keydown', this.keysDown.bind(this));
+        window.removeEventListener('keyup', this.keysUp.bind(this));
         super.destroy();
     }
 }

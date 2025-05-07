@@ -1,0 +1,31 @@
+{
+    "LevelComplete": {
+      "Title": {
+        "Text": "Level complete. Congratulations!",
+        "FontSize": 32,
+        "Color": "0xffffff"
+      },
+      "NextLevelButton": {
+        "Text": "Next Level",
+        "Width": 200,
+        "Height": 60
+      }
+
+    },
+    "LevelFailed": {
+      "Title": {
+        "Text": "Game Over",
+        "Description": "You have been defeated! Try again!"
+      }
+    },
+    "TotalStartAmount": 3,
+    "StartName": "Star",
+    "EmptyStarName": "Empty_star",
+    "RetryButton": {
+      "Text": "Retry",
+      "Width": 200,
+      "Height": 60
+    },
+    "InitialYPosition": 80,
+    "ItemsOffsetY": 40
+}

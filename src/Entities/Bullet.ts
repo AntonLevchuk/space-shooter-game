@@ -25,7 +25,6 @@ export default class Bullet extends Sprite {
 
     public destroy(): void {
         Ticker.shared.remove(this.update, this);
-        this.bulletSpeed = null;
         super.destroy();
     }
 }

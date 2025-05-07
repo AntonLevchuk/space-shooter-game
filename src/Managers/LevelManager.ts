@@ -5,7 +5,6 @@ import GameStateManager, { GameState } from '../Managers/GameStateManager';
 import ScreenUtil from '../Utils/ScreenUtil';
 import ResizeManager from './ResizeManager';
 
-
 export default class LevelManager {
     private missionIndex: number;
     private missionDuration: number;
@@ -16,6 +15,7 @@ export default class LevelManager {
     public timer: Timer;
     private resizeManager: ResizeManager;
     private _resizeCallback: () => void;
+    private isDestroyed: boolean = false;
 
     constructor(missionIndex: number) {
         this.missionIndex = missionIndex;
@@ -38,7 +38,7 @@ export default class LevelManager {
         this.timer = this.timerManager.createTimer(1000); 
         this.timer.repeat = this.countdown;
 
-        this.timer.on('repeat', (elapsed: any, repeat: any) => {
+        this.timer.on('repeat', () => {
             this.countdown--;
             this.timerText.text = this.formatTime(this.countdown);
         });
@@ -57,6 +57,7 @@ export default class LevelManager {
     public startLevel(): void {
         this.countdown = this.missionDuration;
         this.isMissionActive = true;
+        this.timer.reset();
         this.timer.start();
     }
 
@@ -80,16 +81,15 @@ export default class LevelManager {
         this.timerText.position.set(ScreenUtil.width / 2 - this.timerText.width / 2, 10);
     }
 
+    public update = (deltaMS: number): void => {
+        if (!this.isDestroyed) {
+            this.timerManager?.update(deltaMS);
+        }
+    }
+
     public destroy(): void {
         this.timerManager.removeTimer(this.timer);
         this.resizeManager.offResize(this._resizeCallback);
-        this.missionIndex = null;
-        this.missionDuration = null;
-        this.isMissionActive = null;
-        this.timerText = null;
-        this.countdown = null;
-        this.timerManager = null;
-        this.timer = null;
+        this.isDestroyed = true;
     }
 }
-

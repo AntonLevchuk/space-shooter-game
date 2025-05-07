@@ -1,10 +1,11 @@
 import { Application, Container, Renderer } from 'pixi.js';
 import MainMenu from '../UI/MainMenu';
 import SceneManager from './SceneManager';
-import MissionBriefing from '../UI/MissionBriefing';
+import MissionBriefingMenu from '../UI/MissionBriefingMenu';
 import Game from '../Game';
-import Utils from '../Utils/Utils';
 import PauseMenu from '../UI/PauseMenu';
+import LevelEndMenu from '../UI/LevelEndMenu';
+import GameStorage from '../Utils/GameStorage';
 
 export enum GameState {
     MainMenu = 'MainMenu',
@@ -55,18 +56,25 @@ export default class GameStateManager {
                 );
                 break;
             case GameState.MissionBriefing:
-                this.currentScene = new MissionBriefing(Utils.missionIndex);
+                this.currentScene = new MissionBriefingMenu(GameStorage.missionIndex);
                 break;
             case GameState.Playing:
                 if (!GameStateManager.wasPaused) {
                     this.game = new Game(this.app);
+                    GameStorage.resetGameValues();
                 }
-                this.currentScene = this.game.view;
+                this.currentScene = this.game;
                 GameStateManager.wasPaused = false;
                 break;
             case GameState.Paused:
                 this.currentScene = new PauseMenu();
                 GameStateManager.wasPaused = true;
+                break;
+            case GameState.LevelComplete:
+                this.currentScene = new LevelEndMenu();
+                break;
+            case GameState.GameOver:
+                this.currentScene = new LevelEndMenu();
                 break;
         }
 

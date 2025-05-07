@@ -3,6 +3,7 @@ import ScreenUtil from '../Utils/ScreenUtil';
 import Utils from '../Utils/Utils';
 import GameStateManager from '../Managers/GameStateManager';
 import MissionCfg from '../Configs/MissionsCfg.json';
+import GameStorage from '../Utils/GameStorage';
 
 export default class Asteroid extends Sprite {
     private speed: number;
@@ -14,14 +15,14 @@ export default class Asteroid extends Sprite {
         this.y = -this.height;
         
         this.scale.set(this.getRandomScale(
-            MissionCfg.missions[Utils.missionIndex].enemiesConfigs.MaxScale, 
-            MissionCfg.missions[Utils.missionIndex].enemiesConfigs.MaxScale
+            MissionCfg.missions[GameStorage.missionIndex].enemiesConfigs.MaxScale, 
+            MissionCfg.missions[GameStorage.missionIndex].enemiesConfigs.MaxScale
         ));
         this.x = this.width + Math.random() * (ScreenUtil.width - this.width * 1.5);
 
         this.speed = this.getRandomSpeed(
-            MissionCfg.missions[Utils.missionIndex].enemiesConfigs.MinSpeed, 
-            MissionCfg.missions[Utils.missionIndex].enemiesConfigs.MaxSpeed
+            MissionCfg.missions[GameStorage.missionIndex].enemiesConfigs.MinSpeed, 
+            MissionCfg.missions[GameStorage.missionIndex].enemiesConfigs.MaxSpeed
         );
     }
 
@@ -44,7 +45,6 @@ export default class Asteroid extends Sprite {
 
     public destroy(): void {
         Ticker.shared.remove(this.update, this);
-        this.speed = null;
         super.destroy();
     }
 }

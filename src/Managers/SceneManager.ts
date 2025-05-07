@@ -13,7 +13,7 @@ export default class SceneManager {
         if (this.currentScene) {
             this.app.stage.removeChild(this.currentScene);
             if (GameStateManager.getInstance().getState() !== GameState.Paused) {
-                this.currentScene.destroy();
+                this.currentScene.destroy({children: true});
             }
         }
 

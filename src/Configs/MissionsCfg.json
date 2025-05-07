@@ -8,7 +8,7 @@
                 "• Avoid taking damage!",
                 "• Destroy all comets!"
             ],
-            "missionDuration": 30,
+            "missionDuration": 10,
             "enemiesConfigs": {
                 "SpawnInterval": 1700,
                 "MinScale": 0.4,
@@ -44,5 +44,14 @@
                 "• Avoid taking damage!"
             ]
         }
-    ]
+    ],
+    "gameOver": {
+        "name": "GameOver",
+        "description": "You have been defeated! Try again!",
+        "objectives": [
+            "• Survive for {duration} seconds!",
+            "• Avoid taking damage!",
+            "• Destroy all comets and enemies!"
+        ]
+    }
 }

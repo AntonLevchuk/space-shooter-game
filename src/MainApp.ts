@@ -44,5 +44,7 @@ export default class MainApp {
     await AssetsLoader.loadAssets('Asteroid_brown', ['assets/Asteroids/Asteroid_brown.png']);
     await AssetsLoader.loadAssets('Asteroid_grey_&_blue', ['assets/Asteroids/Asteroid_grey_&_blue.png']);
     await AssetsLoader.loadAssets('Bullet', ['assets/Bullet/Bullet.png']);
+    await AssetsLoader.loadAssets('Star', ['assets/Star/Star.png']);
+    await AssetsLoader.loadAssets('Empty_star', ['assets/Star/Empty_star.png']);
   }
 }

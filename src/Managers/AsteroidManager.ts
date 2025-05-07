@@ -3,10 +3,11 @@ import Asteroid from '../Entities/Asteroid';
 import MissionCfg from '../Configs/MissionsCfg.json';
 import Utils from '../Utils/Utils';
 import GameStateManager from './GameStateManager';
+import GameStorage from '../Utils/GameStorage';
 
 export default class AsteroidManager extends Container {
     private textures: Texture[] = [];
-    private spawnInterval: number = MissionCfg.missions[Utils.missionIndex].enemiesConfigs.SpawnInterval;
+    private spawnInterval: number = MissionCfg.missions[GameStorage.missionIndex].enemiesConfigs.SpawnInterval;
     private lastSpawnTime = 0;
     public asteroids: Asteroid[] = [];
 
@@ -39,6 +40,7 @@ export default class AsteroidManager extends Container {
             asteroid.update();
 
             if (Utils.isOutOfScreen(asteroid, true)) {
+                GameStorage.starsErned--;
                 asteroid.destroy();
                 this.asteroids.splice(i, 1);
             }
@@ -47,9 +49,6 @@ export default class AsteroidManager extends Container {
 
     public destroy(): void {
         Ticker.shared.remove(this.update, this);
-        this.textures = null;
-        this.spawnInterval = null;
-        this.lastSpawnTime = null;
         super.destroy();
     }
 }

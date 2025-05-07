@@ -2,7 +2,6 @@ import { Container, Sprite } from 'pixi.js';
 import ScreenUtil from './ScreenUtil';
 
 export default class Utils {
-    public static missionIndex: number = 0;
 
     public static repositionAccordingToResize(sprite: Sprite): void {
         sprite.x = ScreenUtil.width / 2;

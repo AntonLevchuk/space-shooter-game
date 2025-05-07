@@ -66,10 +66,6 @@ export default class MainMenu extends Container {
 
     public destroy(): void {
         this.resizeManager.offResize(this._resizeCallback);
-        this.resizeManager = null;
-        this.playButton = null;
-        this.settingsButton = null;
-        this.muteButton = null;
         super.destroy();
     }
 }

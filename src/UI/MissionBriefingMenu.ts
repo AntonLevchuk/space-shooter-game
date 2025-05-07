@@ -6,7 +6,7 @@ import ScreenUtil from '../Utils/ScreenUtil';
 import MissionCfg from '../Configs/MissionsCfg.json';
 import MenuCfg from '../Configs/MenuCfg.json';
 
-export default class MissionBriefing extends Container {
+export default class MissionBriefingMenu extends Container {
     private titleText: Text;
     private descriptionText: Text;
     private objectivesText: Text;
@@ -101,12 +101,6 @@ export default class MissionBriefing extends Container {
 
     public destroy(): void {
         this.resizeManager.offResize(this._resizeCallback);
-        this.resizeManager = null;
-        this.titleText = null;
-        this.descriptionText = null;
-        this.objectivesText = null;
-        this.playButton = null;
-        this.backButton = null;
         super.destroy();
     }
 }
