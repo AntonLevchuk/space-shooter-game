@@ -3,7 +3,7 @@ import UIButton from './Elements/UIButton';
 import GameStateManager, { GameState } from '../Managers/GameStateManager';
 import ResizeManager from '../Managers/ResizeManager';
 import ScreenUtil from '../Utils/ScreenUtil';
-import MissionCfg from '../Configs/MissionsCfg.json';
+import MissionCfg from '../Configs/GameCfg.json';
 import MenuCfg from '../Configs/MenuCfg.json';
 
 export default class MissionBriefingMenu extends Container {

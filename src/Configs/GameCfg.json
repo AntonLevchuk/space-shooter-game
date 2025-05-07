@@ -1,0 +1,109 @@
+{
+    "missions": [
+        {
+            "name": "Mission 1",
+            "description": "Survive as deadly comets rain down. Destroy them or dodge — do whatever it takes to reach the next level.",
+            "objectives": [
+                "• Survive for {duration} seconds!",
+                "• Avoid taking damage!",
+                "• Destroy all comets!"
+            ],
+            "missionDuration": 3,
+            "enemiesConfigs": {
+                "Asteroid": {
+                    "SpawnInterval": 1700,
+                    "MinScale": 0.4,
+                    "MaxScale": 0.9,
+                    "MinSpeed": 0.5, 
+                    "MaxSpeed": 1.2,
+                    "damage": 30
+                }
+            },
+            "enemies": ["Asteroid"],
+            "enemiesTexturesKeys": {
+                "Asteroid": ["Asteroid_grey", "Asteroid_brown", "Asteroid_grey_&_blue"]
+            }
+        },
+        {
+            "name": "Mission 2",
+            "description": "Defeat all asteroids and avoid getting hit. Only the strongest will survive.",
+            "objectives": [
+                "• Survive for {duration} seconds!",
+                "• Avoid taking damage!",
+                "• Destroy all comets and enemies!"
+            ],
+            "missionDuration": 30,
+            "enemiesConfigs": {
+                "Asteroid": {
+                    "SpawnInterval": 1200,
+                    "MinScale": 0.4,
+                    "MaxScale": 0.9,
+                    "MinSpeed": 0.5, 
+                    "MaxSpeed": 1.2,
+                    "damage": 30
+                },
+                "Kamikaze": {
+                    "SpawnInterval": 1100,
+                    "MinScale": 1.4,
+                    "MaxScale": 2.8,
+                    "MinSpeed": 0.8, 
+                    "MaxSpeed": 1.7,
+                    "damage": 50
+                }
+            },
+            "enemies": ["Asteroid", "Kamikaze"],
+            "enemiesTexturesKeys": {
+                "Asteroid": ["Asteroid_grey", "Asteroid_brown", "Asteroid_grey_&_blue"],
+                "Kamikaze": ["Kamikaze_1", "Kamikaze_2", "Kamikaze_3"]
+            }
+        },
+        {
+            "name": "Mission 3",
+            "description": "Face the final boss and prove your skill in battle. Only one will emerge victorious.",
+            "objectives": [
+                "• Defeat the boss!",
+                "• Avoid taking damage!"
+            ],
+            "enemiesConfigs": {
+                "Asteroid": {
+                    "SpawnInterval": 1200,
+                    "MinScale": 0.4,
+                    "MaxScale": 0.9,
+                    "MinSpeed": 0.5, 
+                    "MaxSpeed": 1.2,
+                    "damage": 30
+                },
+                "Kamikaze": {
+                    "SpawnInterval": 1400,
+                    "MinScale": 0.4,
+                    "MaxScale": 0.9,
+                    "MinSpeed": 0.5, 
+                    "MaxSpeed": 1.3,
+                    "damage": 30
+                }
+            },
+            "enemies": ["Asteroid", "Kamikaze", "Boss"]
+        }
+    ],
+    "gameOver": {
+        "name": "GameOver",
+        "description": "You have been defeated! Try again!",
+        "objectives": [
+            "• Survive for {duration} seconds!",
+            "• Avoid taking damage!",
+            "• Destroy all comets and enemies!"
+        ]
+    },
+    "allAssetsToLoad": {
+        "Hero": "assets/Hero/Hero.png",
+        "Asteroid_grey": "assets/Asteroids/Asteroid_grey.png",
+        "Asteroid_brown": "assets/Asteroids/Asteroid_brown.png",
+        "Asteroid_grey_&_blue": "assets/Asteroids/Asteroid_grey_&_blue.png",
+        "Kamikaze_1": "assets/Enemies/Kamikaze/Kamikaze_1.png",
+        "Kamikaze_2": "assets/Enemies/Kamikaze/Kamikaze_2.png",
+        "Kamikaze_3": "assets/Enemies/Kamikaze/Kamikaze_3.png",
+        "Bullet": "assets/Bullet/Bullet.png",
+        "Star": "assets/Star/Star.png",
+        "Empty_star": "assets/Star/Empty_star.png"
+    }
+}

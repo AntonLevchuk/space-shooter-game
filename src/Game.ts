@@ -1,6 +1,5 @@
 import { Application, Container, Renderer, Ticker } from 'pixi.js';
 import Hero from './Entities/Hero';
-import AsteroidManager from './Managers/AsteroidManager';
 import ResizeManager from './Managers/ResizeManager';
 import Utils from './Utils/Utils';
 import LevelManager from './Managers/LevelManager';
@@ -8,17 +7,18 @@ import UIButton from './UI/Elements/UIButton';
 import GameStateManager, { GameState } from './Managers/GameStateManager';
 import ScreenUtil from './Utils/ScreenUtil';
 import GameStorage from './Utils/GameStorage';
+import EnemyManager from './Managers/EnemyManager';
 
 export default class Game extends Container {
     private pixiApp: Application<Renderer>;
     private hero: Hero;
-    private asteroidManager: AsteroidManager;
+    private enemyManager: EnemyManager;
     private levelManager: LevelManager;
     private pauseButton: UIButton;
 
     private boundUpdate: (ticker: Ticker) => void;
     private boundHeroUpdate: () => void;
-    private boundAsteroidUpdate: () => void;
+    private boundEnemiesUpdate: () => void;
     private resizeCallback: () => void;
     private boundLevelUpdate: (deltaMS: number) => void;
 
@@ -32,8 +32,10 @@ export default class Game extends Container {
         this.hero = new Hero('Hero');
         this.addChild(this.hero);
 
-        this.asteroidManager = new AsteroidManager(['Asteroid_grey', 'Asteroid_brown', 'Asteroid_grey_&_blue']);
-        this.addChild(this.asteroidManager);
+        GameStorage.hero = this.hero;
+
+        this.enemyManager = new EnemyManager(GameStorage.missionIndex);
+        this.addChild(this.enemyManager);
 
         this.levelManager = new LevelManager(GameStorage.missionIndex);
         this.addChild(this.levelManager.getTimerText());
@@ -46,8 +48,8 @@ export default class Game extends Container {
         };
         ResizeManager.getInstance().onResize(this.resizeCallback);
 
-        this.boundHeroUpdate = this.hero.update.bind(this.hero, this.asteroidManager.asteroids);
-        this.boundAsteroidUpdate = this.asteroidManager.update.bind(this.asteroidManager);
+        this.boundHeroUpdate = this.hero.update.bind(this.hero, this.enemyManager.enemies);
+        this.boundEnemiesUpdate = this.enemyManager.update.bind(this.enemyManager);
         this.boundUpdate = this.update.bind(this);
         this.boundLevelUpdate = this.levelManager.update;
 
@@ -74,7 +76,7 @@ export default class Game extends Container {
 
     private update(ticker: Ticker): void {
         if (GameStateManager.getInstance().getState() === GameState.Playing) {
-            this.boundAsteroidUpdate();
+            this.boundEnemiesUpdate();
             this.boundHeroUpdate();
             this.boundLevelUpdate(ticker.elapsedMS);
         }
@@ -82,15 +84,15 @@ export default class Game extends Container {
 
     public destroy(options?: { children?: boolean }): void {
         this.pixiApp.ticker.remove(this.boundUpdate);
-        this.pixiApp.ticker.remove(this.boundAsteroidUpdate);
+        this.pixiApp.ticker.remove(this.boundEnemiesUpdate);
         this.pixiApp.ticker.remove(this.boundHeroUpdate);
         ResizeManager.getInstance().offResize(this.resizeCallback);
-
+        
+        GameStorage.hero = null
         this.hero.destroy();
-        this.asteroidManager.destroy();
         this.levelManager.destroy();
         this.pauseButton.destroy();
-
+        this.enemyManager.destroy();
         super.destroy(options);
     }
 }

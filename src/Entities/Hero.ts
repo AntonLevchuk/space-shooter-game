@@ -3,10 +3,9 @@ import HeroCfg from '../Configs/HeroCfg.json';
 import ScreenUtil from '../Utils/ScreenUtil';
 import Bullet from './Bullet';
 import Utils from '../Utils/Utils';
-import Asteroid from './Asteroid';
 import GameStateManager, { GameState } from '../Managers/GameStateManager';
-import MissionsCfg from '../Configs/MissionsCfg.json';
 import GameStorage from '../Utils/GameStorage';
+import BaseEnemyClass from './Enemies/BaseEnemyClass';
 
 export default class Hero extends Container {
     public sprite: Sprite;
@@ -42,13 +41,13 @@ export default class Hero extends Container {
         this.setupInput();
     }
 
-    public update(asteroids: Asteroid[]): void {
+    public update(enemies: BaseEnemyClass[]): void {
         if (!GameStateManager.getInstance().isPlaying()) return;
         this.moveHero();
         this.rotateHero();
         this.updateShooting();
-        this.updateBullets(asteroids);
-        this.checkHeroHealth(asteroids);
+        this.updateBullets(enemies);
+        this.checkHeroHealth(enemies);
     }
 
     private setupInput(): void {
@@ -113,7 +112,7 @@ export default class Hero extends Container {
         this.bullets.push(bullet);
     }
 
-    private updateBullets(asteroids: Asteroid[]): void {
+    private updateBullets(enemies: BaseEnemyClass[]): void {
         for (let i: number = this.bullets.length - 1; i >= 0; i--) {
             const bullet: Bullet = this.bullets[i];
             bullet.update();
@@ -124,35 +123,36 @@ export default class Hero extends Container {
                 break;
             }
 
-            for (let j: number = 0; j < asteroids.length; j++) {
-                const asteroid: Asteroid = asteroids[j];
-                if (Utils.checkAABBCollision(bullet, asteroid)) {
+            for (let j: number = 0; j < enemies.length; j++) {
+                const enemy: BaseEnemyClass = enemies[j];
+                if (Utils.checkAABBCollision(bullet, enemy)) {
                     bullet.destroy();
                     this.bullets.splice(i, 1);
 
-                    asteroid.destroy();
-                    asteroids.splice(j, 1);
+                    enemy.destroy();
+                    enemies.splice(j, 1);
                     break;
                 }
             }
         }
     }
 
-    private checkHeroHealth(asteroids: Asteroid[]): void {
-        for (let i: number = 0; i < asteroids.length; i++) {
-            const asteroid: Asteroid = asteroids[i];
-            if (Utils.checkAABBCollision(this.sprite, asteroid)) {
+    private checkHeroHealth(enemies: BaseEnemyClass[]): void {
+        for (let i: number = 0; i < enemies.length; i++) {
+            const enemy: BaseEnemyClass = enemies[i];
+            if (Utils.checkAABBCollision(this.sprite, enemy)) {
                 if (!GameStorage.isTakenDamage) {
                     GameStorage.isTakenDamage = true;
                     GameStorage.starsErned--;
                 }
-                this.heroHealth -= MissionsCfg.missions[GameStorage.missionIndex].enemiesConfigs.damage;
+                const enemyConfig = GameStorage.getEnemyConfig(enemy.enemyType);
+                this.heroHealth -= enemyConfig.damage;
                 if (this.heroHealth <= 0) {
                     GameStorage.starsErned = 0;
                     GameStateManager.getInstance().changeState(GameState.GameOver);
                 }
-                asteroid.destroy();
-                asteroids.splice(i, 1);
+                enemy.destroy();
+                enemies.splice(i, 1);
                 break;
             }
 

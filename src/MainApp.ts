@@ -5,6 +5,12 @@ import SceneManager from './Managers/SceneManager';
 import GameStateManager, { GameState } from './Managers/GameStateManager';
 import ResizeManager from './Managers/ResizeManager';
 
+interface GameConfigInterface {
+  allAssetsToLoad: Record<string, string>;
+}
+
+const GameConfig: GameConfigInterface = require('./Configs/GameCfg.json');
+
 declare global {
   interface GlobalThis {
     __PIXI_APP__: any;
@@ -33,18 +39,14 @@ export default class MainApp {
     ScreenUtil.init(this.app);
     ResizeManager.init(this.app);
     SceneManager.init(this.app);
-
     this.gameStateManager = GameStateManager.init(this.app);
     this.gameStateManager.changeState(GameState.MainMenu);
   }
-
+  
   private async loadAssets(): Promise<void> {
-    await AssetsLoader.loadAssets('Hero', ['assets/Hero/Hero.png']);
-    await AssetsLoader.loadAssets('Asteroid_grey', ['assets/Asteroids/Asteroid_grey.png']);
-    await AssetsLoader.loadAssets('Asteroid_brown', ['assets/Asteroids/Asteroid_brown.png']);
-    await AssetsLoader.loadAssets('Asteroid_grey_&_blue', ['assets/Asteroids/Asteroid_grey_&_blue.png']);
-    await AssetsLoader.loadAssets('Bullet', ['assets/Bullet/Bullet.png']);
-    await AssetsLoader.loadAssets('Star', ['assets/Star/Star.png']);
-    await AssetsLoader.loadAssets('Empty_star', ['assets/Star/Empty_star.png']);
+    for (const key of Object.keys(GameConfig.allAssetsToLoad)) {
+      const assetPath: string = GameConfig.allAssetsToLoad[key as keyof typeof GameConfig.allAssetsToLoad];
+      await AssetsLoader.loadAssets(key, [assetPath]);
+    }
   }
 }

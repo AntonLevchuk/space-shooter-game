@@ -1,28 +1,31 @@
-import { Sprite, Texture, Ticker } from 'pixi.js';
-import ScreenUtil from '../Utils/ScreenUtil';
-import Utils from '../Utils/Utils';
-import GameStateManager from '../Managers/GameStateManager';
-import MissionCfg from '../Configs/MissionsCfg.json';
-import GameStorage from '../Utils/GameStorage';
+import { Texture, Ticker } from 'pixi.js';
+import ScreenUtil from '../../Utils/ScreenUtil';
+import GameStateManager from '../../Managers/GameStateManager';
+import GameStorage from '../../Utils/GameStorage';
+import BaseEnemyClass from './BaseEnemyClass';
 
-export default class Asteroid extends Sprite {
+export default class Asteroid extends BaseEnemyClass {
     private speed: number;
+    public outOfScreenOnBottomBorder: boolean = true;
+    public enemyType: string = GameStorage.asteroidEnemyTypeName;
 
     constructor(texture: Texture) {
         super(texture);
 
         this.anchor.set(0.5);
         this.y = -this.height;
+
+        const enemyConfig = GameStorage.getEnemyConfig(this.enemyType);
         
         this.scale.set(this.getRandomScale(
-            MissionCfg.missions[GameStorage.missionIndex].enemiesConfigs.MaxScale, 
-            MissionCfg.missions[GameStorage.missionIndex].enemiesConfigs.MaxScale
+            enemyConfig.MinScale, 
+            enemyConfig.MaxScale
         ));
         this.x = this.width + Math.random() * (ScreenUtil.width - this.width * 1.5);
 
         this.speed = this.getRandomSpeed(
-            MissionCfg.missions[GameStorage.missionIndex].enemiesConfigs.MinSpeed, 
-            MissionCfg.missions[GameStorage.missionIndex].enemiesConfigs.MaxSpeed
+            enemyConfig.MinSpeed, 
+            enemyConfig.MaxSpeed
         );
     }
 
@@ -36,10 +39,10 @@ export default class Asteroid extends Sprite {
 
     public update() {
         if (!GameStateManager.getInstance().isPlaying()) return;
-        this.moveDown();
+        this.move();
     }
 
-    protected moveDown(): void {
+    public move(): void {
         this.y += this.speed;
     }
 

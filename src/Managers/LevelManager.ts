@@ -1,6 +1,6 @@
 import { TimerManager, Timer } from 'eventemitter3-timer';
 import { Text } from 'pixi.js';
-import MissionCfg from '../Configs/MissionsCfg.json';
+import MissionCfg from '../Configs/GameCfg.json';
 import GameStateManager, { GameState } from '../Managers/GameStateManager';
 import ScreenUtil from '../Utils/ScreenUtil';
 import ResizeManager from './ResizeManager';

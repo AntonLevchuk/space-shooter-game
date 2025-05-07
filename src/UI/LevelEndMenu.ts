@@ -11,7 +11,7 @@ export default class LevelEndMenu extends Container {
     private totalStars: number = LevelEndMenuCfg.TotalStartAmount;
     private title: Text;
     private retryBtn: UIButton;
-    private nextBtn: UIButton;
+    private nextRoundBtn: UIButton;
     private resizeManager: ResizeManager;
     private _resizeCallback: () => void;
 
@@ -57,7 +57,7 @@ export default class LevelEndMenu extends Container {
         });
         this.addChild(this.retryBtn);
 
-        this.nextBtn = new UIButton({
+        this.nextRoundBtn = new UIButton({
             label: LevelEndMenuCfg.LevelComplete.NextLevelButton.Text,
             width: LevelEndMenuCfg.LevelComplete.NextLevelButton.Width,
             height: LevelEndMenuCfg.LevelComplete.NextLevelButton.Height,
@@ -66,7 +66,7 @@ export default class LevelEndMenu extends Container {
                 GameStateManager.getInstance().changeState(GameState.MissionBriefing)
             },
         });
-        isComplete && this.addChild(this.nextBtn);
+        isComplete && this.addChild(this.nextRoundBtn);
 
         this.onResize();
         
@@ -88,10 +88,10 @@ export default class LevelEndMenu extends Container {
         );
         currentY += this.starsContainer.height + LevelEndMenuCfg.ItemsOffsetY;
 
-        this.retryBtn.position.set(centerX - this.retryBtn.width / 2, currentY);
+        this.nextRoundBtn.position.set(centerX - this.nextRoundBtn.width / 2, currentY);
         currentY += this.retryBtn.height + LevelEndMenuCfg.ItemsOffsetY;
-
-        this.nextBtn.position.set(centerX - this.nextBtn.width / 2, currentY);
+        
+        this.retryBtn.position.set(centerX - this.retryBtn.width / 2, currentY);
     }
 
     public destroy(options?: DestroyOptions): void {
