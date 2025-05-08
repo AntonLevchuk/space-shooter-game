@@ -55,7 +55,8 @@ export default class Game extends Container {
 
         this.resizeCallback = () => {
             Utils.repositionAccordingToResize(this.hero.sprite);
-            this.pauseButton.position.set(ScreenUtil.width - 60, 10);
+            this.pauseButton.position.set(ScreenUtil.width - this.pauseButton.width - 60, 10);
+            this.boosterButton.position.set(ScreenUtil.width - this.boosterButton.width - 20, (ScreenUtil.height - this.boosterButton.height) / 2);
         };
         ResizeManager.getInstance().onResize(this.resizeCallback);
 
@@ -83,15 +84,15 @@ export default class Game extends Container {
     }
 
     private createBoosterButton(): void {
-        this.pauseButton = new UIButton({
+        this.boosterButton = new UIButton({
             label: 'Activate',
             width: 100,
             height: 50,
             fontSize: 24,
             onClick: this.toggleBoosterButton.bind(this),
         });
-        this.pauseButton.position.set(ScreenUtil.width - this.pauseButton.width - 20, (ScreenUtil.height - this.pauseButton.height) / 2);
-        this.addChild(this.pauseButton);
+        this.boosterButton.position.set(ScreenUtil.width - this.boosterButton.width - 20, (ScreenUtil.height - this.boosterButton.height) / 2);
+        this.addChild(this.boosterButton);
     }
 
     private togglePause(): void {

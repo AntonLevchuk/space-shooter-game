@@ -10,12 +10,12 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@pixi/core": "^7.4.3",
-    "@pixi/interaction": "^6.5.10",
     "eventemitter3-timer": "^1.0.1",
+    "howler": "^2.2.4",
     "pixi.js": "^8.9.2"
   },
   "devDependencies": {
+    "@types/howler": "^2.2.12",
     "copy-webpack-plugin": "^13.0.0",
     "html-webpack-plugin": "^5.6.3",
     "serve": "^14.2.4",

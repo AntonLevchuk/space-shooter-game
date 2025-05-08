@@ -6,6 +6,7 @@ import Game from '../Game';
 import PauseMenu from '../UI/PauseMenu';
 import LevelEndMenu from '../UI/LevelEndMenu';
 import GameStorage from '../Utils/GameStorage';
+import { SoundsManager } from './SoundsManager';
 
 export enum GameState {
     MainMenu = 'MainMenu',
@@ -47,17 +48,19 @@ export default class GameStateManager {
 
     public changeState(newState: GameState): void {
         this.state = newState;
+        const soundsManager = SoundsManager.getInstance();
 
         switch (this.state) {
             case GameState.MainMenu:
                 GameStorage.missionIndex = 0;
-                this.currentScene = new MainMenu(
-                    () => console.log('Settings pressed'),
-                    () => console.log('Toggle Mute pressed')
-                );
+                this.currentScene = new MainMenu();
+                soundsManager.play('Main_menu_ambient_sound.mp3');
+                soundsManager.stop('Round_ambient_sound.mp3');
                 break;
             case GameState.MissionBriefing:
                 this.currentScene = new MissionBriefingMenu(GameStorage.missionIndex);
+                soundsManager.play('Main_menu_ambient_sound.mp3');
+                soundsManager.stop('Round_ambient_sound.mp3');
                 break;
             case GameState.Playing:
                 if (!GameStateManager.wasPaused) {
@@ -66,16 +69,24 @@ export default class GameStateManager {
                 }
                 this.currentScene = this.game;
                 GameStateManager.wasPaused = false;
+                soundsManager.play('Round_ambient_sound.mp3');
+                soundsManager.stop('Main_menu_ambient_sound.mp3');
                 break;
             case GameState.Paused:
                 this.currentScene = new PauseMenu();
                 GameStateManager.wasPaused = true;
+                soundsManager.play('Main_menu_ambient_sound.mp3');
+                soundsManager.stop('Round_ambient_sound.mp3');
                 break;
             case GameState.LevelComplete:
                 this.currentScene = new LevelEndMenu();
+                soundsManager.play('Main_menu_ambient_sound.mp3');
+                soundsManager.stop('Round_ambient_sound.mp3');
                 break;
             case GameState.GameOver:
                 this.currentScene = new LevelEndMenu();
+                soundsManager.play('Main_menu_ambient_sound.mp3');
+                soundsManager.stop('Round_ambient_sound.mp3');
                 break;
         }
 

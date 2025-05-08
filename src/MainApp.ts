@@ -4,9 +4,19 @@ import ScreenUtil from './Utils/ScreenUtil';
 import SceneManager from './Managers/SceneManager';
 import GameStateManager, { GameState } from './Managers/GameStateManager';
 import ResizeManager from './Managers/ResizeManager';
+import { SoundsManager } from './Managers/SoundsManager';
+
+interface SoundConfigInterface{
+  soundKey: {
+    src: string,
+    volume: number,
+    loop: boolean
+  }
+}
 
 interface GameConfigInterface {
   allAssetsToLoad: Record<string, string>;
+  allSoundsToLoad: Record<string, SoundConfigInterface["soundKey"]>;
 }
 
 const GameConfig: GameConfigInterface = require('./Configs/GameCfg.json');
@@ -20,6 +30,7 @@ declare global {
 export default class MainApp {
   private app: Application<Renderer>;
   private gameStateManager: GameStateManager;
+  private soundsManager: SoundsManager;
 
   constructor() {
     this.app = new Application();
@@ -34,7 +45,10 @@ export default class MainApp {
 
     document.body.appendChild(this.app.canvas);
 
+    this.soundsManager = SoundsManager.getInstance();
+
     await this.loadAssets();
+    await this.loadSounds();
 
     ScreenUtil.init(this.app);
     ResizeManager.init(this.app);
@@ -47,6 +61,13 @@ export default class MainApp {
     for (const key of Object.keys(GameConfig.allAssetsToLoad)) {
       const assetPath: string = GameConfig.allAssetsToLoad[key as keyof typeof GameConfig.allAssetsToLoad];
       await AssetsLoader.loadAssets(key, [assetPath]);
+    }
+  }
+
+  private async loadSounds(): Promise<void> {
+    for (const key of Object.keys(GameConfig.allSoundsToLoad)) {
+      const soundConfig: SoundConfigInterface["soundKey"] = GameConfig.allSoundsToLoad[key as keyof typeof GameConfig.allSoundsToLoad]
+      await this.soundsManager.load(key, soundConfig.src, {volume: soundConfig.volume, loop: soundConfig.loop});
     }
   }
 }

@@ -14,6 +14,8 @@ export default class GameStorage {
 
     public static shieldBoosterType: string = 'ShieldBooster';
 
+    public static soundsMuted: boolean = false;
+
     public static hero: Hero | null = null;
 
     public static resetGameValues(): void {

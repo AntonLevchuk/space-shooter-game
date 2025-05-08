@@ -1,9 +1,8 @@
 import { Sprite, Texture } from 'pixi.js';
 import Hero from './Hero';
 import Utils from '../Utils/Utils';
-import GameStorage from '../Utils/GameStorage';
-import BoostersCfg from '../Configs/BoostersCfg.json';
 import ScreenUtil from '../Utils/ScreenUtil';
+import { SoundsManager } from '../Managers/SoundsManager';
 
 export default class BoosterItem extends Sprite {
     private speed: number = 2;
@@ -38,6 +37,7 @@ export default class BoosterItem extends Sprite {
     }
 
     private collect(): void {
+        SoundsManager.getInstance().play('Pick_up_booster_sound.mp3');
         BoosterItem.collected = true;
         this.visible = false;
     }

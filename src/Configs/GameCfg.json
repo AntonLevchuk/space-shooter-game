@@ -126,5 +126,37 @@
         "Boss_bullet": "assets/Bullet/Boss_bullet.png",
         "Star": "assets/Star/Star.png",
         "Empty_star": "assets/Star/Empty_star.png"
+    },
+    "allSoundsToLoad": {
+        "Main_menu_ambient_sound.mp3": {
+            "src": "sounds/Main_menu_ambient_sound.mp3",
+            "loop": true,
+            "volume": 0.5
+        },
+        "Round_ambient_sound.mp3": {
+            "src": "sounds/Round_ambient_sound.mp3",
+            "loop": true,
+            "volume": 0.5
+        },
+        "Shoot_sound.mp3": {
+            "src": "sounds/Shoot_sound.mp3",
+            "loop": false,
+            "volume": 0.5
+        },
+        "Pick_up_booster_sound.mp3": {
+            "src": "sounds/Pick_up_booster_sound.mp3",
+            "loop": false,
+            "volume": 0.5
+        },
+        "Activate_shield_sound.mp3": {
+            "src": "sounds/Activate_shield_sound.mp3",
+            "loop": false,
+            "volume": 0.5
+        },
+        "Explosion_sound.mp3": {
+            "src": "sounds/Explosion_sound.mp3",
+            "loop": false,
+            "volume": 0.5
+        }
     }
 }
