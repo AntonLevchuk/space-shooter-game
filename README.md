@@ -32,24 +32,24 @@ A temporary booster grants extra armor to help you during tough situations.
 Follow these steps to set up and run the game locally on your machine:
 
 - ***Clone the repository***
-- ***bash --> *** 
+- ***bash -->*** 
 git clone https://github.com/AntonLevchuk/space-shooter-game.git
 cd space-shooter-game
 git checkout dev
 
-- ***Install dependencies --> ***
+- ***Install dependencies -->***
 npm install
 
-- ***If you run into dependency resolution issues, try --> ***
+- ***If you run into dependency resolution issues, try -->***
 npm install --legacy-peer-deps
 
-- ***Build the production version --> ***
+- ***Build the production version -->***
 npx webpack --mode production
 - The compiled files will be located in the dist/ directory
 - To build the development version -->  npx webpack --mode development
 
-- ***Start the development server --> ***
+- ***Start the development server -->***
 npx webpack serve
 
-- ***Then open your browser and navigate to --> ***
+- ***Then open your browser and navigate to -->***
 http://localhost:3000
