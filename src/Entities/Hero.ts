@@ -36,11 +36,11 @@ export default class Hero extends Container {
         this.sprite.scale.set(HeroCfg.Scale);
 
         this.keys = {
-            'KeyA': false, // Left
-            'KeyD': false, // Right
-            'KeyW': false, // Up
-            'KeyS': false, // Down
-            'Space': false, // Shoot
+            [HeroCfg.Controls.MoveLeft]: false, // Left
+            [HeroCfg.Controls.MoveRight]: false, // Right
+            [HeroCfg.Controls.MoveUp]: false, // Up
+            [HeroCfg.Controls.MoveDown]: false, // Down
+            [HeroCfg.Controls.Shoot]: false, // Shoot
         };
 
         this.healthPoints = HeroCfg.Health;
@@ -93,24 +93,30 @@ export default class Hero extends Container {
     private keysUp(event: KeyboardEvent): void {
         if (event.code in this.keys) {
             this.keys[event.code] = false;
-            if (event.code === 'Space') this.stopShooting();
+            if (event.code === HeroCfg.Controls.Shoot) this.stopShooting();
         }
     }
 
+    // [HeroCfg.Controls.MoveLeft]: false, // Left
+    // [HeroCfg.Controls.MoveRight]: false, // Right
+    // [HeroCfg.Controls.MoveUp]: false, // Up
+    // [HeroCfg.Controls.MoveDown]: false, // Down
+    // [HeroCfg.Controls.Shoot]: false, // Shoot
+
     private moveHero(): void {
-        if (this.keys['KeyA'] && this.sprite.x >= this.sprite.width / 2) {
+        if (this.keys[HeroCfg.Controls.MoveLeft] && this.sprite.x >= this.sprite.width / 2) {
             this.moveLeft();
         }
     
-        if (this.keys['KeyD'] && this.sprite.x <= ScreenUtil.width - this.sprite.width / 2) {
+        if (this.keys[HeroCfg.Controls.MoveRight] && this.sprite.x <= ScreenUtil.width - this.sprite.width / 2) {
             this.moveRight();
         }
 
-        if (this.keys['KeyW'] && this.sprite.y >= this.sprite.height / 2) {
+        if (this.keys[HeroCfg.Controls.MoveUp] && this.sprite.y >= this.sprite.height / 2) {
             this.moveUp();
         }
 
-        if (this.keys['KeyS'] && this.sprite.y <= ScreenUtil.height - this.sprite.height / 2) {
+        if (this.keys[HeroCfg.Controls.MoveDown] && this.sprite.y <= ScreenUtil.height - this.sprite.height / 2) {
             this.moveDown();
         }
     }

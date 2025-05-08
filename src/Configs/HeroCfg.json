@@ -20,5 +20,13 @@
     "HealthBarColor": "0xff0000",
     "HealthBarOffsetX": 70,
     "HealthBarOffsetY": 68,
-    "HealthBarWidth": 60
+    "HealthBarWidth": 60,
+
+    "Controls": {
+        "MoveUp": "KeyW",
+        "MoveDown": "KeyS",
+        "MoveLeft": "KeyA",
+        "MoveRight": "KeyD",
+        "Shoot": "Space"
+    }
 }
