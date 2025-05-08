@@ -16,7 +16,7 @@ interface SoundConfigInterface{
 
 interface GameConfigInterface {
   allAssetsToLoad: Record<string, string>;
-  allSoundsToLoad: Record<string, SoundConfigInterface["soundKey"]>;
+  allSoundsToLoad: Record<string, SoundConfigInterface['soundKey']>;
 }
 
 const GameConfig: GameConfigInterface = require('./Configs/GameCfg.json');
@@ -66,7 +66,7 @@ export default class MainApp {
 
   private async loadSounds(): Promise<void> {
     for (const key of Object.keys(GameConfig.allSoundsToLoad)) {
-      const soundConfig: SoundConfigInterface["soundKey"] = GameConfig.allSoundsToLoad[key as keyof typeof GameConfig.allSoundsToLoad]
+      const soundConfig: SoundConfigInterface['soundKey'] = GameConfig.allSoundsToLoad[key as keyof typeof GameConfig.allSoundsToLoad]
       await this.soundsManager.load(key, soundConfig.src, {volume: soundConfig.volume, loop: soundConfig.loop});
     }
   }

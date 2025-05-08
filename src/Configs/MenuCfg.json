@@ -3,6 +3,7 @@
         "playButtonName": "Play",
         "settingsButtonName": "Settings",
         "muteButtonName": "Mute",
+        "unmuteButtonName": "Unmute",
 
         "playButtonParams": {
             "offSetX": 100,
@@ -15,7 +16,7 @@
         "muteButtonParams": {
             "offSetX": 60,
             "offSetY": 10,
-            "width": 50,
+            "width": 100,
             "height": 50,
             "fontSize": 20
         }

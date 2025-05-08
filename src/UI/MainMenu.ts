@@ -58,9 +58,11 @@ export default class MainMenu extends Container {
         if (!GameStorage.soundsMuted) {
             SoundsManager.getInstance().mute(true);
             GameStorage.soundsMuted = true;
+            this.muteButton.setLabel(MenuCfg.mainMenu.unmuteButtonName);
         } else {
             SoundsManager.getInstance().mute(false); 
             GameStorage.soundsMuted = false;
+            this.muteButton.setLabel(MenuCfg.mainMenu.muteButtonName);
         }
     }
 
