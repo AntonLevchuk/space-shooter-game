@@ -15,7 +15,7 @@ After completing a level, your performance is rated with a 3-star system based o
 A temporary booster grants extra armor to help you during tough situations.
 
 ## Game Configuration
-- In the src/Configs folder, you can find the configuration files the game is based on. To change the difficulty of the levels or customize them further, take a look at GameCfg.json. There you can configure the enemies for each level, the level duration, and even change their order.
+- In the src/Configs folder, you can find the configuration files the game is based on. To change the difficulty of the levels or customize them further, take a look at GameCfg.json. There you can configure the enemies for each level, the level duration, even change the level order. Also you can change the sounds volume there.
 - To change the control settings, check the HeroCfg.json file. There you'll find key bindings for controlling the player. You can also customize your hero's attributes there.
 
 ## Controls

@@ -131,32 +131,32 @@
         "Main_menu_ambient_sound.mp3": {
             "src": "sounds/Main_menu_ambient_sound.mp3",
             "loop": true,
-            "volume": 0.5
+            "volume": 0.05
         },
         "Round_ambient_sound.mp3": {
             "src": "sounds/Round_ambient_sound.mp3",
             "loop": true,
-            "volume": 0.5
+            "volume": 0.05
         },
         "Shoot_sound.mp3": {
             "src": "sounds/Shoot_sound.mp3",
             "loop": false,
-            "volume": 0.5
+            "volume": 0.1
         },
         "Pick_up_booster_sound.mp3": {
             "src": "sounds/Pick_up_booster_sound.mp3",
             "loop": false,
-            "volume": 0.5
+            "volume": 0.1
         },
         "Activate_shield_sound.mp3": {
             "src": "sounds/Activate_shield_sound.mp3",
             "loop": false,
-            "volume": 0.5
+            "volume": 0.1
         },
         "Explosion_sound.mp3": {
             "src": "sounds/Explosion_sound.mp3",
             "loop": false,
-            "volume": 0.5
+            "volume": 0.1
         }
     }
 }
